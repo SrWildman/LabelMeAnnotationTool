@@ -9,12 +9,12 @@ function StartupLabelMe() {
 
   if(IsNetscape() || (IsMicrosoft() && (bversion>=4.5)) || IsSafari() || IsChrome()) {
 
-    if (IsNetscape()){
-      $('#label_buttons_contrast').css('left', '545px');
-    }
-    if (IsSafari()){
-      $('#label_buttons_contrast').css('left', '525px');
-    }
+    // if (IsNetscape()){
+    //   $('#label_buttons_contrast').css('left', '545px');
+    // }
+    // if (IsSafari()){
+    //   $('#label_buttons_contrast').css('left', '525px');
+    // }
     // Write "start up" messages:
     WriteLogMsg('*start_loading');
     console.log('LabelMe: starting up...');
@@ -313,17 +313,17 @@ function InitializeAnnotationTools(tag_button, tag_canvas){
          </form>';
 
       $('#tool_buttons').append(html_str3);
-      $('#help').before(html_str2); 
+      // $('#help').before(html_str2); 
     }
     $('#'+tag_button).append(html_str);  
-    if (document.getElementById("polygon")) document.getElementById("polygon").setAttribute('style', 'background-color: #faa');
+    if (document.getElementById("polygon")) document.getElementById("polygon").setAttribute('style', 'background-color:rgba(0,159,219,0.25);');
     if (document.getElementById("segmDiv")){
       document.getElementById("segmDiv").setAttribute('style', 'opacity: 1');
       document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
     }
     if (document.getElementById("polygonDiv")){
       document.getElementById("polygonDiv").setAttribute('style', 'opacity: 1');
-      document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
+      //document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
     }
     if (video_mode) SetPolygonDrawingMode(true);
     
@@ -366,8 +366,8 @@ function SetPolygonDrawingMode(bounding){
   }
   var buttons = document.getElementsByClassName("labelBtnDraw");
   for (var i = 0; i < buttons.length; i++) buttons[i].setAttribute('style', 'background-color: #fff');
-  if (!bounding) document.getElementById("polygon").setAttribute('style', 'background-color: #faa');
-  else document.getElementById("bounding_box").setAttribute('style', 'background-color: #faa');
+  if (!bounding) document.getElementById("polygon").setAttribute('style', 'background-color:rgba(0,159,219,0.25);');
+  else document.getElementById("bounding_box").setAttribute('style', '	background-color:rgba(0,159,219,0.25);');
   bounding_box = bounding;
   SetDrawingMode(0);
 }

@@ -3,7 +3,7 @@
 /********** HEADER *************/
 
 .header {
-	background: #ED1C24;
+	/* background: #009fdb; */
 	width:100%;
 	min-width:640px;
 	height:50px;
@@ -60,7 +60,7 @@
 	-moz-border-radius:20px;
 	border-radius:20px;
 	/*height:52px;*/
-    left:270px;
+    left:10px;
 	margin-bottom:0px;
 	display:block;
 }
@@ -76,7 +76,7 @@
 	-moz-border-radius:20px;
 	border-radius:20px;
 	/*height:52px;*/
-    left:515px;
+    left:200px !important;
 	margin-bottom:0px;
 	display:block;
 }
@@ -98,7 +98,7 @@
 }
 
 .labelBtn:hover, img.labelBtn:hover {
-	background-color:#faa;
+	background-color:rgba(0,159,219,0.25);
 	/*-moz-box-shadow:    2px 2px 2px 0px #222;
     -webkit-box-shadow:  2px 2px 2px 0px #222;
     box-shadow:          2px 2px 2px 0px #222;*/
@@ -152,7 +152,7 @@
 }
 
 .labelBtnDraw:hover, img.labelBtnDraw:hover {
-	background-color:#faa;
+	background-color:rgba(0,159,219,0.25);
 	/*-moz-box-shadow:    2px 2px 2px 0px #222;
     -webkit-box-shadow:  2px 2px 2px 0px #222;
     box-shadow:          2px 2px 2px 0px #222;*/
