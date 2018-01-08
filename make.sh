@@ -1,3 +1,3 @@
 #!/bin/bash
-make -C /var/www/html/LableMeAnnotationTool/
+make -C /var/www/html/LabelMeAnnotationTool/
 /bin/bash
