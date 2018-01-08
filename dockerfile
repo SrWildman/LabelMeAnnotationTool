@@ -8,4 +8,4 @@ RUN apt-get install -y --no-install-recommends libapache2-mod-perl2 && \
   a2enmod cgi
 RUN apt-get update && apt-get install -y --no-install-recommends libcgi-session-perl
 
-CMD ["make", "-C" ,"/var/www/html/LabelMeAnnotationTool/make"]
+CMD make -C /var/www/html/LabelMeAnnotationTool/make ; sleep infinity
