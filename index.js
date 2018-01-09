@@ -3,7 +3,7 @@ $(document).ready(function () {
 
   origin = $('body')[0].ownerDocument.referrer;
   //If this changes...make sure to update location of tool.html in image attribute
-  imageLocation = 'LabelMeAnnotationTool/Images/';
+  imageLocation = 'AnnotationTool/Images/';
 
   $.ajax({
     //get all images from imageLocation
@@ -25,7 +25,7 @@ $(document).ready(function () {
             }).each((i, val) => {
               //add image to view
               var image = $(val).attr("href");
-              $('<div class="gallery_product col-lg-3 col-md-4 col-sm-4 col-xs-6 filter ' + folder +'"></div>').html('<a href="'+origin + 'LabelMeAnnotationTool/tool.html?actions=a&folder='+folder+'&image='+image+'" class="'+image+'"></a>').appendTo('.row')
+              $('<div class="gallery_product col-lg-3 col-md-4 col-sm-4 col-xs-6 filter ' + folder +'"></div>').html('<a href="'+origin + 'AnnotationTool/tool.html?actions=a&folder='+folder+'&image='+image+'" class="'+image+'"></a>').appendTo('.row')
               $('div a[class="'+image+'"]').html('<img src="'+origin + imageLocation + folder +'/'+ image + '" class="img-responsive">')
             });
           }

@@ -18,12 +18,12 @@ having to install or copy a large dataset onto their computers.
 
 ### DOWNLOAD:
 
-You can download a [zip file of the source code](https://github.com/CSAILVision/LabelMeAnnotationTool/archive/master.zip) directly.  
+You can download a [zip file of the source code](https://github.com/CSAILVision/AnnotationTool/archive/master.zip) directly.  
 
 Alternatively, you can clone it from GitHub as follows:
 
 ``` sh
-$ git clone https://github.com/CSAILVision/LabelMeAnnotationTool.git
+$ git clone https://github.com/CSAILVision/AnnotationTool.git
 ```
 
 
@@ -180,7 +180,7 @@ and folders in the "Annotations" folder have write permissions. Also,
 ### CODE API
 
 The following is a brief overview of the source code.  Please see the
-[Javascript code API](https://cdn.rawgit.com/CSAILVision/LabelMeAnnotationTool/master/annotationTools/js/api/index.html)
+[Javascript code API](https://cdn.rawgit.com/CSAILVision/AnnotationTool/master/annotationTools/js/api/index.html)
 for more details.
 
 * tool.html - This is the entry point for the annotation tool.  The main
@@ -189,7 +189,7 @@ drawing canvases.
 
 * annotationTools/js/ - This folder contains all of the javascript
 code for the annotation tool functionalities.
-We provide the [code API](https://cdn.rawgit.com/CSAILVision/LabelMeAnnotationTool/master/annotationTools/js/api/index.html)
+We provide the [code API](https://cdn.rawgit.com/CSAILVision/AnnotationTool/master/annotationTools/js/api/index.html)
 for the Javascript source code, which has been automatically extracted
 from the source code comments.
 

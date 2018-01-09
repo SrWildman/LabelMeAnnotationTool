@@ -15,7 +15,7 @@
 2. Edit /etc/apache2/sites-available/default so that the following is
    the only <Directory> element in the file (change
    REPLACE_WITH_YOUR_LOCATION with the directory location of the LabelMe
-   annotation tool code, e.g. /var/www/LabelMeAnnotationTool):
+   annotation tool code, e.g. /var/www/AnnotationTool):
 
    ``` sh
    <Directory "REPLACE_WITH_YOUR_LOCATION">

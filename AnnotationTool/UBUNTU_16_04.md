@@ -36,7 +36,7 @@
 
     ``` sh
     sudo tee /etc/apache2/sites-available/000-default.conf <<EOL
-    <Directory "/var/www/html/LabelMeAnnotationTool">
+    <Directory "/var/www/html/AnnotationTool">
        Options Indexes FollowSymLinks MultiViews Includes ExecCGI
        AddHandler cgi-script .cgi
        AllowOverride All
@@ -51,15 +51,15 @@
 1. Clone LabelMe from GitHub. Move the LabelMe files to Apache/web-server directories.
 
     ``` sh
-    git clone https://github.com/CSAILVision/LabelMeAnnotationTool.git
+    git clone https://github.com/CSAILVision/AnnotationTool.git
 
-    sudo mv ./LabelMeAnnotationTool/ /var/www/html/LabelMeAnnotationTool/
+    sudo mv ./AnnotationTool/ /var/www/html/AnnotationTool/
     ```
 
 1. Run the *Makefile*.
 
     ```
-    cd /var/www/html/LabelMeAnnotationTool/
+    cd /var/www/html/AnnotationTool/
 
     make
     ```
