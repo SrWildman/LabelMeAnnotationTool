@@ -1,13 +1,12 @@
 
 $(document).ready(function () {
 
-  origin = $('body')[0].ownerDocument.referrer;
   //If this changes...make sure to update location of tool.html in image attribute
   imageLocation = 'AnnotationTool/Images/';
 
   $.ajax({
     //get all images from imageLocation
-    url: origin + imageLocation,
+    url: imageLocation,
     success: function (data) {
       //go through the contents of each folder
       $(data).find("a:contains(/)").each(function () {
@@ -16,7 +15,7 @@ $(document).ready(function () {
         $('<button class="btn btn-default filter-button" data-filter="'+folder +'"></button>').html(folder).appendTo('.btns')
         $.ajax({
           //get contents of the folder
-          url: origin + imageLocation + folder +'/',
+          url: imageLocation + folder +'/',
           success: (data) => {
             var regex = new RegExp("([^\s]+(\.(jpg|jpeg|png|gif|bmp))$)")
             //filter only valid image files
@@ -25,8 +24,8 @@ $(document).ready(function () {
             }).each((i, val) => {
               //add image to view
               var image = $(val).attr("href");
-              $('<div class="gallery_product col-lg-3 col-md-4 col-sm-4 col-xs-6 filter ' + folder +'"></div>').html('<a href="'+origin + 'AnnotationTool/tool.html?actions=a&folder='+folder+'&image='+image+'" class="'+image+'"></a>').appendTo('.row')
-              $('div a[class="'+image+'"]').html('<img src="'+origin + imageLocation + folder +'/'+ image + '" class="img-responsive">')
+              $('<div class="gallery_product col-lg-3 col-md-4 col-sm-4 col-xs-6 filter ' + folder +'"></div>').html('<a href="'+ 'AnnotationTool/tool.html?actions=a&folder='+folder+'&image='+image+'" class="'+image+'"></a>').appendTo('.row')
+              $('div a[class="'+image+'"]').html('<img src="'+ imageLocation + folder +'/'+ image + '" class="img-responsive">')
             });
           }
         });
