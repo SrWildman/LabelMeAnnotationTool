@@ -24,7 +24,7 @@ $(document).ready(function () {
             }).each((i, val) => {
               //add image to view
               var image = $(val).attr("href");
-              $('<div class="gallery_product col-lg-3 col-md-4 col-sm-4 col-xs-6 filter ' + folder +'"></div>').html('<a href="'+ 'AnnotationTool/tool.html?actions=a&folder='+folder+'&image='+image+'" class="'+image+'"></a>').appendTo('.row')
+              $('<div class="gallery_product col-lg-3 col-md-4 col-sm-4 col-xs-6 filter ' + folder +'"></div>').html('<a href="'+ 'AnnotationTool/tool.html?actions=a&mode=f&folder='+folder+'&image='+image+'" class="'+image+'"></a>').appendTo('.row')
               $('div a[class="'+image+'"]').html('<img src="'+ imageLocation + folder +'/'+ image + '" class="img-responsive">')
             });
           }
