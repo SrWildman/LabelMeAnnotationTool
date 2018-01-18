@@ -252,6 +252,8 @@ function FinishStartup() {
   $('#query_canvas_div').attr("onmouseup","javascript:event.preventDefault();");
   $('#query_canvas_div').attr("oncontextmenu","javascript:return false;");
 
+  $('#xml').attr("onclick","location.href='" + main_media.GetFileInfo().GetAnnotationPath() + "'")
+
   // Initialize the username:
   initUserName();
 
