@@ -1,4 +1,4 @@
-Options +Includes +ExecCGI
+Options +Includes +ExecCGI -Indexes
 AddHandler cgi-script .cgi .sh .pl
 AddType text/html .shtml
 AddHandler server-parsed .shtml
