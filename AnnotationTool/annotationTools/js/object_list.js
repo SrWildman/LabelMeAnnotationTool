@@ -19,12 +19,21 @@ function RenderObjectList() {
   var html_str = '<div class="object_list" id="anno_list" style="border:0px solid black;z-index:0;" ondrop="drop(event, -1)" ondragenter="return dragEnter(event)" ondragover="return dragOver(event)">';
   
   var Npolygons = LMnumberOfObjects(LM_xml);
+  var Ntags = LMnumberOfTags(LM_xml);
+
   var NundeletedPolygons = 0;
+  var NundeletedTags = 0;
 
   // Count undeleted objects:
   for(var ii=0; ii < Npolygons; ii++) {
     if(!parseInt(LMgetObjectField(LM_xml,ii,'deleted'))) {
       NundeletedPolygons++;
+    }
+  }
+
+  for(var ii=0; ii < Ntags; ii++) {
+    if(!parseInt(LMgetTagField(LM_xml,ii,'deleted'))) {
+      NundeletedTags++;
     }
   }
   
@@ -33,6 +42,55 @@ function RenderObjectList() {
   
   // Create DIV
   if (showImgName) {html_str += '<p><b>Image name: '+ imgName +'</b></p>';}
+  html_str += '<b>Image Level Annotations ('+ NundeletedTags +')</b>\n';
+    // Show list (of non-deleted objects)
+    html_str += '<ol>'
+    for(var i=0; i < Ntags; i++) {
+    //   // get part level and read objects in the order given by the parts tree
+      var ii = i;
+      var level = 0;
+      
+      var isDeleted = parseInt(LMgetTagField(LM_xml,ii,'deleted'));
+      var is_currently_shown = true;
+      
+      if(is_currently_shown && (((ii<num_orig_tags)&&((view_Existing&&!isDeleted)||(isDeleted&&view_Deleted))) || ((ii>=num_orig_tags)&&(!isDeleted||(isDeleted&&view_Deleted))))) {
+        // change the left margin as a function of part level
+        
+        html_str += '<div class="" id="LinkAnchor-' + ii + '" style="z-index:1; margin-left:'+ (level*1.5) +'em">';
+        html_str += '<li>';       
+        // show object name:
+        html_str += '<a class=""  id="Link-' + ii + '" '+
+        'href="javascript:main_handler.TagLinkClick('+ii+');" ';
+
+        
+        if(isDeleted) {
+    html_str += ' style="color:#888888"><b>';
+        }
+        else {
+    html_str += '>';
+        }
+  
+        var obj_name = LMgetTagField(LM_xml,ii,'name');
+        if(obj_name.length==0 && !draw_anno) {
+    html_str += '<i>[ Please enter name ]</i>';
+        }
+        else {
+    html_str += obj_name;
+        }
+        
+        if(isDeleted) html_str += '</b>';
+        html_str += '</a>';
+  
+        var attributes = LMgetObjectField(LM_xml,ii,'attributes');
+        if(attributes.length>0) {
+    html_str += ' (' + attributes +')';
+        }
+        
+        html_str += '</li></div>';
+      }
+     }
+     html_str += '</ol>'
+  html_str += '<p style="font-size:10px;line-height:100%"><a id="add_tag_btn" href="javascript:mkPopupTag();">Add Image Annotation</a></p>';
   html_str += '<b>Polygons in this image ('+ NundeletedPolygons +')</b>';
   html_str += '<p style="font-size:10px;line-height:100%"><a ' +
   'onmouseover="main_canvas.ShadePolygons();" ' +
@@ -132,7 +190,6 @@ function RenderObjectList() {
   }
   
   html_str += '</ol><p><br/></p></div>';
-  
   // Attach annotation list to 'anno_anchor' DIV element:
   $('#anno_anchor').append(html_str);
   $('#Link'+add_parts_to).css('font-weight',700); //

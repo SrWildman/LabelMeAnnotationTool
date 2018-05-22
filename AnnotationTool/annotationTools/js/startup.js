@@ -135,6 +135,8 @@ function SetAllAnnotationsArray() {
   var num_obj = obj_elts.length;
   
   num_orig_anno = num_obj;
+  num_orig_tags = LM_xml.getElementsByTagName("tag");
+  num_orig_tags = num_orig_tags.length;
 
   console.time('initialize XML');
   // Initialize any empty tags in the XML file:
@@ -212,6 +214,7 @@ function LoadTemplateSuccess(xml) {
 
   // Set global variable:
   num_orig_anno = 0;
+  num_orig_tags = 0;
 
   // Finish the startup scripts:
   FinishStartup();

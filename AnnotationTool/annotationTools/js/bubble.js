@@ -171,9 +171,30 @@ function mkPopup(left,top,scribble_popup) {
   setTimeout("$('#objEnter').focus();",1);
 }
 
-function mkEditPopup(left,top,anno) {
+function mkEditPopup(left,top,anno_id) {
   edit_popup_open = 1;
-  var innerHTML = GetPopupFormEdit(anno);
+  var innerHTML = GetPopupFormEdit(anno_id);
+  var dom_bubble = CreatePopupBubble(left,top,innerHTML,'main_section');
+  CreatePopupBubbleCloseButton(dom_bubble,StopEditEvent);
+
+  // Focus the cursor inside the box
+  $('#objEnter').select();
+  $('#objEnter').focus();
+}
+
+function mkPopupTag(scribble_popup) {
+  wait_for_input = 1;
+  var innerHTML = GetPopupFormTag(scribble_popup);
+  var x = main_media.getCurWidth();
+  CreatePopupBubble(x,0,innerHTML,'main_section');
+
+  // Focus the cursor inside the box
+  setTimeout("$('#objEnter').focus();",1);
+}
+
+function mkEditPopupTag(left,top,anno) {
+  edit_popup_open = 1;
+  var innerHTML = GetPopupFormEditTag(anno);
   var dom_bubble = CreatePopupBubble(left,top,innerHTML,'main_section');
   CreatePopupBubbleCloseButton(dom_bubble,StopEditEvent);
 
@@ -232,6 +253,23 @@ function GetPopupFormDraw(scribble_form) {
   return html_str;
 }
 
+function GetPopupFormTag(scribble_form) {
+  wait_for_input = 1;
+  part_bubble = false;
+  html_str = "<b>Enter tag name</b><br />";
+  html_str += HTMLobjectBox("");
+  html_str += "<br />";
+  
+  // Done button:
+  html_str += '<input type="button" value="Done" title="Press this button after you have provided all the information you want about the object." onclick="main_handler.SubmitTag();" tabindex="0" />';
+  
+  // Delete button:
+  html_str += '<input type="button" style="float:right" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.WhatIsThisObjectDeleteButton();" tabindex="0" />';
+  html_str += '<br />' 
+  
+  return html_str;
+}
+
 function GetPopupFormEdit(anno) {
   // get object name and attributes from 'anno'
   edit_popup_open =  1;
@@ -280,6 +318,30 @@ function GetPopupFormEdit(anno) {
   
   // Add parts/Stop adding parts
   if (add_parts_to == null) html_str += '<input type="button" value="Add parts" title="Press this button if you want to start adding parts" onclick="main_handler.StartAddParts();" tabindex="0" />';
+  
+  return html_str;
+}
+
+
+function GetPopupFormEditTag(anno_id) {
+  // get object name and attributes from 'anno'
+  edit_popup_open =  1;
+  part_bubble = false;
+  var obj_name = LMgetTagField(LM_xml,anno_id,'name');
+  if(obj_name=="") obj_name = "?";
+  
+  html_str = "<b>Enter object name</b><br />"; 
+  html_str += HTMLobjectBox(obj_name);
+  
+  html_str += "<br />";
+  
+  // Done button:
+  if (video_mode) html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_media.SubmitEditObject();" tabindex="0" />';
+  
+  else html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabelTag('+anno_id+');" tabindex="0" />';
+  
+  // Delete button:
+  html_str += '<input type="button" style="float:right" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.EditBubbleDeleteButtonTag('+ anno_id +');" tabindex="0" /><br />';
   
   return html_str;
 }

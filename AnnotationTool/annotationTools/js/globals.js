@@ -59,6 +59,7 @@ var autocomplete_mode = false;
 var wait_for_input;
 var edit_popup_open = 0;
 var num_orig_anno;
+var num_orig_tags;
 var global_count = 0;
 var req_submit;
 

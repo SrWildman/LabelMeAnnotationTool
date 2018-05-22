@@ -215,6 +215,7 @@ function DrawCanvasClosePolygon() {
   FillPolygon(query_anno.DrawPolygon(main_media.GetImRatio(), draw_x, draw_y));
 }
 
+
 /** Handles when the user presses the undo close button in response to
  the "What is this object?" popup bubble. */
 function UndoCloseButton() {
