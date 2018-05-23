@@ -143,10 +143,10 @@ function StartTagEdit(anno_id,event) {
   // }
   // FillPolygon(select_anno.DrawPolygon(main_media.GetImRatio(),pt_x,pt_y));
   
-  pt_x = main_media.getCurWidth();
+  pt_x = 0;
   pt_y = 0;
   // Get location where popup bubble will appear:
-  var pt = main_media.SlideWindow(Math.round(pt_x[0]*main_media.GetImRatio()),Math.round(pt_y[0]*main_media.GetImRatio()));
+  var pt = main_media.SlideWindow(Math.round(pt_x*main_media.GetImRatio()),Math.round(pt_y*main_media.GetImRatio()));
 
   // Make edit popup appear.
   main_media.ScrollbarsOff();
