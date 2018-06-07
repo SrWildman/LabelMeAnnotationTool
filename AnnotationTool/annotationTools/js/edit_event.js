@@ -89,6 +89,81 @@ function StartEditEvent(anno_id,event) {
   }
 }
 
+function StartTagEdit(anno_id,event) {
+  
+  console.log('LabelMe: Starting tag edit event...');
+  
+  if (add_parts_to != null){
+    $('#Link'+add_parts_to).css('font-weight',400)
+    add_parts_to = null;
+  }
+  if (video_mode) oVP.Pause();
+  if(event) event.stopPropagation();
+  if((IsUserAnonymous() || (!IsCreator(LMgetTagField(LM_xml, anno_id, 'username')))) && (!IsUserAdmin()) && (anno_id<num_orig_anno) && !action_RenameExistingObjects && !action_ModifyControlExistingObjects && !action_DeleteExistingObjects) {
+    PermissionError();
+    return;
+  }
+  active_canvas = SELECTED_CANVAS;
+  edit_popup_open = 1;
+  
+  // Turn off automatic flag and write to XML file:
+  if(LMgetTagField(LM_xml, anno_id, 'automatic')) {
+    // Insert data for server logfile:
+    var anid = main_canvas.GetAnnoIndex(anno_id);
+    old_name = LMgetTagField(LM_xml,main_canvas.annotations[anid].anno_id,'name');
+    new_name = old_name;
+    InsertServerLogData('cpts_not_modified');
+    
+    // Set <automatic> in XML:
+    LMsetTagField(LM_xml, anno_id, 'automatic', '0');
+    
+    // Write XML to server:
+    WriteXML(SubmitXmlUrl,LM_xml,function(){return;});
+  }
+  
+  // // Move select_canvas to front:
+  // $('#select_canvas').css('z-index','0');
+  // $('#select_canvas_div').css('z-index','0');
+  var anno = anno_id;
+  
+  // editedControlPoints = 0;
+    
+  // if(username_flag) submit_username();
+  
+  // select_anno = anno;
+  // select_anno.SetDivAttach('select_canvas');
+  // var pt_x, pt_y;
+  // if (video_mode){
+  //   pt_x = LMgetTagField(LM_xml,select_anno.anno_id,'x', oVP.getcurrentFrame());
+  //   pt_y = LMgetTagField(LM_xml,select_anno.anno_id,'y', oVP.getcurrentFrame());
+  // }
+  // else {
+  //   pt_x = select_anno.GetPtsX();
+  //   pt_y = select_anno.GetPtsY();
+  // }
+  // FillPolygon(select_anno.DrawPolygon(main_media.GetImRatio(),pt_x,pt_y));
+  
+  pt_x = 0;
+  pt_y = 0;
+  // Get location where popup bubble will appear:
+  var pt = main_media.SlideWindow(Math.round(pt_x*main_media.GetImRatio()),Math.round(pt_y*main_media.GetImRatio()));
+
+  // Make edit popup appear.
+  main_media.ScrollbarsOff();
+  if(LMgetTagField(LM_xml, anno_id, 'verified')) {
+    edit_popup_open = 1;
+    var innerHTML = "<b>This annotation has been blocked.</b><br />";
+    var dom_bubble = CreatePopupBubble(pt[0],pt[1],innerHTML,'main_section');
+    CreatePopupBubbleCloseButton(dom_bubble,StopEditEvent);
+  }
+  else {
+    // Popup edit bubble:
+    WriteLogMsg('*Opened_Edit_Popup');
+    mkEditPopupTag(pt[0],pt[1],anno_id);
+    
+  }
+}
+
 /** This function is called when the edit event is finished.  It can be
  * triggered when the user (1) clicks the close edit bubble button, 
  * (2) zooms, (3) submits an object label in the popup bubble, 
@@ -136,6 +211,36 @@ function StopEditEvent() {
     RenderObjectList();
   }
   console.log('LabelMe: Stopped edit event.');
+}
+
+
+function StopTagEdit() {
+  // Update the global variables for the active canvas and edit popup bubble:
+
+  active_canvas = REST_CANVAS;
+  edit_popup_open = 0;
+  // Move select_canvas to back:
+  $('#select_canvas').css('z-index','-2');
+  $('#select_canvas_div').css('z-index','-2');
+  
+  // Remove polygon from the select canvas:
+  var anno = select_anno;
+  select_anno = null;
+
+  // Write logfile message:
+  WriteLogMsg('*Closed_Edit_Popup');
+
+  // Close the edit popup bubble:
+  CloseEditPopup();
+  // Turn on the image scrollbars:
+  main_media.ScrollbarsOn();
+
+
+  // Render the object list:
+  if(view_ObjList) {
+    RenderObjectList();
+  }
+  console.log('LabelMe: Stopped tag edit event.');
 }
 
 var adjust_objEnter = '';

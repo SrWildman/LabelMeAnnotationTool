@@ -327,7 +327,10 @@ function image(id) {
         data_im.data = data;
         main_media.im.getContext('2d').putImageData(data_im,0,0,0,0,main_media.width_curr, main_media.height_curr);
 
-	}
+    }
+    this.getCurWidth = function(){
+        return this.width_curr;
+    }
     
 }
 

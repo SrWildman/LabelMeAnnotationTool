@@ -171,11 +171,31 @@ function mkPopup(left,top,scribble_popup) {
   setTimeout("$('#objEnter').focus();",1);
 }
 
-function mkEditPopup(left,top,anno) {
+function mkEditPopup(left,top,anno_id) {
   edit_popup_open = 1;
-  var innerHTML = GetPopupFormEdit(anno);
+  var innerHTML = GetPopupFormEdit(anno_id);
   var dom_bubble = CreatePopupBubble(left,top,innerHTML,'main_section');
   CreatePopupBubbleCloseButton(dom_bubble,StopEditEvent);
+
+  // Focus the cursor inside the box
+  $('#objEnter').select();
+  $('#objEnter').focus();
+}
+
+function mkPopupTag(scribble_popup) {
+  wait_for_input = 1;
+  var innerHTML = GetPopupFormTag(scribble_popup);
+  CreatePopupBubble(0,0,innerHTML,'main_section');
+
+  // Focus the cursor inside the box
+  setTimeout("$('#objEnter').focus();",1);
+}
+
+function mkEditPopupTag(left,top,anno) {
+  edit_popup_open = 1;
+  var innerHTML = GetPopupFormEditTag(anno);
+  var dom_bubble = CreatePopupBubble(left,top,innerHTML,'main_section');
+  CreatePopupBubbleCloseButton(dom_bubble,StopTagEdit);
 
   // Focus the cursor inside the box
   $('#objEnter').select();
@@ -232,6 +252,23 @@ function GetPopupFormDraw(scribble_form) {
   return html_str;
 }
 
+function GetPopupFormTag(scribble_form) {
+  wait_for_input = 1;
+  part_bubble = false;
+  html_str = "<b>Enter tag name</b><br />";
+  html_str += HTMLobjectBoxTag("");
+  html_str += "<br />";
+  
+  // Done button:
+  html_str += '<input type="button" value="Done" title="Press this button after you have provided all the information you want about the object." onclick="main_handler.SubmitTag();" tabindex="0" />';
+  
+  // Delete button:
+  html_str += '<input type="button" style="float:right" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.WhatIsThisObjectDeleteButton();" tabindex="0" />';
+  html_str += '<br />' 
+  
+  return html_str;
+}
+
 function GetPopupFormEdit(anno) {
   // get object name and attributes from 'anno'
   edit_popup_open =  1;
@@ -284,6 +321,30 @@ function GetPopupFormEdit(anno) {
   return html_str;
 }
 
+
+function GetPopupFormEditTag(anno_id) {
+  // get object name and attributes from 'anno'
+  edit_popup_open =  1;
+  part_bubble = false;
+  var obj_name = LMgetTagField(LM_xml,anno_id,'name');
+  if(obj_name=="") obj_name = "?";
+  
+  html_str = "<b>Enter object name</b><br />"; 
+  html_str += HTMLobjectBoxTag(obj_name, anno_id);
+  
+  html_str += "<br />";
+  
+  // Done button:
+  if (video_mode) html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_media.SubmitEditObject();" tabindex="0" />';
+  
+  else html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabelTag('+anno_id+');" tabindex="0" />';
+  
+  // Delete button:
+  html_str += '<input type="button" style="float:right" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.EditBubbleDeleteButtonTag('+ anno_id +');" tabindex="0" /><br />';
+  
+  return html_str;
+}
+
 // ****************************
 // Simple building blocks:
 // ****************************
@@ -306,6 +367,43 @@ function HTMLobjectBox(obj_name) {
     // If press enter, then submit:
     if (video_mode) html_str += 'main_media.SubmitEditObject()};" ';
     else html_str += 'main_handler.SubmitEditLabel()};" ';
+  }
+  
+  // if there is a list of objects, we need to habilitate the list
+  if(object_choices=='...') {
+    html_str += '/>'; // close <input
+  }
+  else {
+    html_str += 'list="datalist1" />'; // insert list and close <input
+    html_str += '<datalist id="datalist1"><select style="display:none">';
+    for(var i = 0; i < object_choices.length; i++) {
+      html_str += '<option value="' + object_choices[i] + '">' + object_choices[i] + '</option>';
+    }
+    html_str += '</select></datalist>';
+  }
+  
+  html_str += '<br />';
+  
+  return html_str;
+}
+
+function HTMLobjectBoxTag(obj_name, idx) {
+  var html_str="";
+  
+  html_str += '<input name="objEnter" id="objEnter" type="text" style="width:220px;" tabindex="0" value="'+obj_name+'" title="Enter the object\'s name here. Avoid application specific names, codes, long descriptions. Use a name you think other people would agree in using. "';
+  
+  html_str += ' onkeyup="var c;if(event.keyCode)c=event.keyCode;if(event.which)c=event.which;if(c==13){';
+  //html_str += 'console.log($(".ui-autocomplete.ui-widget:visible").length);';
+  // if obj_name is empty it means that the box is being created
+  if (obj_name=='') {
+    // If press enter, then submit; if press ESC, then delete:
+    if (video_mode) html_str += 'main_media.SubmitTag()};if(c==27) main_handler.WhatIsThisObjectDeleteButton();" ';
+    else html_str += 'main_handler.SubmitTag()};if(c==27)main_handler.WhatIsThisObjectDeleteButton();" ';
+  }
+  else {
+    // If press enter, then submit:
+    if (video_mode) html_str += 'main_media.SubmitEditObjectTag()};" ';
+    else html_str += 'main_handler.SubmitEditLabelTag('+idx+')};" ';
   }
   
   // if there is a list of objects, we need to habilitate the list
