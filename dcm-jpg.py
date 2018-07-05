@@ -25,10 +25,10 @@ for root, subdirs, files in os.walk(walk_dir):
             try:
                 orig = pydicom.dcmread(file_path)
                 pix_arr = orig.pixel_array
-                img = PIL.Image.fromarray(pix_arr)
+                img = PIL.Image.fromarray(pix_arr.astype('uint8'))
                 if(img.mode == 'I;16'):
                     img.mode = 'I'
-                    print(img,orig)
+                    # print(img,orig)
                     img = img.point(lambda i:i*(1./4)).convert('L')
                 img.save(file_path[:-4] + '.jpg')
                 print('\t- saved file ' + filename[:-4] + '.jpg' +
