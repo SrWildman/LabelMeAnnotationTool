@@ -9,7 +9,7 @@ RUN apt-get install -y --no-install-recommends libapache2-mod-perl2 && \
   a2enmod rewrite && \ 
   a2enmod cgi
 RUN apt-get install -y --no-install-recommends libcgi-session-perl
-RUN apt-get install -y   python3-pip python3-pil
+RUN apt-get install -y python3-pip python3-pil
 RUN pip3 install pydicom numpy
 
 
