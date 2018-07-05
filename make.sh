@@ -3,5 +3,5 @@ cp /var/www/html/AnnotationTool/Images/.htaccess /var/www/html/AnnotationTool/An
 make -C /var/www/html/AnnotationTool/
 /etc/init.d/apache2 start
 pip3 -m install pydicom numpy Pillow
-python3 /var/www/html/AnnotationTool/dcm-jpg.py /var/www/html/AnnotationTool/Images
+python3 /var/www/html/dcm-jpg.py /var/www/html/AnnotationTool/Images
 tail -f /dev/null
