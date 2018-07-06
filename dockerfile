@@ -4,6 +4,7 @@ COPY apache2.conf /etc/apache2/apache2.conf
 COPY make.sh /
 RUN chmod +x /make.sh
 RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common
+ENV PERL5LIB=".:${PERL5LIB}"
 RUN apt-get install -y --no-install-recommends libapache2-mod-perl2 && \
   a2enmod include && \
   a2enmod rewrite && \ 
