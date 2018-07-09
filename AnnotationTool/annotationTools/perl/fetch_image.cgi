@@ -3,6 +3,7 @@
 use strict;
 use CGI;
 use CGI::Carp qw ( fatalsToBrowser );
+use lib '/var/www/html/AnnotationTool/annotationTools/perl';
 
 require 'globalvariables.pl';
 use vars qw($LM_HOME);
