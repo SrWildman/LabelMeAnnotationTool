@@ -14,6 +14,4 @@ RUN apt-get install -y --no-install-recommends libcgi-session-perl
 RUN apt-get install -y python3-pip python3-pil
 RUN pip3 install pydicom numpy
 
-RUN python3 dcm-jpg.py tmp_store Images Annotations
-
 CMD /make.sh
