@@ -8,6 +8,8 @@ import PIL.Image
 import pydicom
 import numpy as np
 
+from shutil import copyfile
+
 err = []
 walk_dir = os.path.abspath(sys.argv[1])
 out_dirs = []
@@ -46,5 +48,14 @@ for root, subdirs, files in os.walk(walk_dir):
                 print('\t- ERROR: ' + str(e))
                 err.append(str(e))
                 pass
+        elif filename.endswith('.jpg') or filename.endswith('jpeg'):
+            for out in out_dirs:
+                fold = os.path.join(out,subdir)
+                if not os.path.isdir(fold):
+                    os.mkdir(fold)
+                pat = os.path.join(fold,filename)
+                copyfile(file_path,pat[:-4] + '.jpg')
+                print('\t- saved file ' + filename[:-4] + '.jpg' +
+                    ' (full path: ' + pat[:-4] + '.jpg' + ')')
 
 if len(err) > 0: print(err)
