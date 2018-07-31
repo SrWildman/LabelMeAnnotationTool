@@ -10,7 +10,11 @@ import numpy as np
 
 err = []
 walk_dir = os.path.abspath(sys.argv[1])
+out_dirs = []
+for i in range(2,len(sys.argv)):
+    out_dirs.append(os.path.abspath(sys.argv[i]))
 print('walk_dir (absolute) = ' + os.path.abspath(walk_dir))
+print('out_dirs (absolute) = ' + str(out_dirs))
 
 for root, subdirs, files in os.walk(walk_dir):
     print('--\nroot = ' + root)
@@ -30,9 +34,14 @@ for root, subdirs, files in os.walk(walk_dir):
                     img.mode = 'I'
                     # print(img,orig)
                     img = img.point(lambda i:i*(1./4)).convert('L')
-                img.save(file_path[:-4] + '.jpg')
-                print('\t- saved file ' + filename[:-4] + '.jpg' +
-                      ' (full path: ' + file_path[:-4] + '.jpg' + ')')
+                for out in out_dirs:
+                    fold = os.path.join(out,subdir)
+                    if not os.path.isdir(fold):
+                        os.mkdir(fold)
+                    pat = os.path.join(fold,filename)
+                    img.save(pat[:-4] + '.jpg')
+                    print('\t- saved file ' + filename[:-4] + '.jpg' +
+                        ' (full path: ' + pat[:-4] + '.jpg' + ')')
             except NotImplementedError as e:
                 print('\t- ERROR: ' + str(e))
                 err.append(str(e))
