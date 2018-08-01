@@ -3,7 +3,7 @@ COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY apache2.conf /etc/apache2/apache2.conf
 COPY make.sh /
 RUN chmod +x /make.sh
-RUN chmod +x dcm-jpg.py
+# RUN chmod +x dcm-jpg.py
 RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common
 ENV PERL5LIB=".:${PERL5LIB}"
 RUN apt-get install -y --no-install-recommends libapache2-mod-perl2 && \

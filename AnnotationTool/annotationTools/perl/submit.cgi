@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use lib File::Spec->catdir($FindBin::Bin)
 require 'globalvariables.pl';
 require 'logfile_helper.pl';
 
