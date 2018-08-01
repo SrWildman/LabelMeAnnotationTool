@@ -3,7 +3,9 @@
 use strict;
 use CGI;
 use CGI::Carp qw ( fatalsToBrowser );
-use lib File::Spec->catdir($FindBin::Bin)
+use FindBin;
+use File::Spec;
+use lib File::Spec->catdir($FindBin::Bin);
 
 require 'globalvariables.pl';
 use vars qw($LM_HOME);

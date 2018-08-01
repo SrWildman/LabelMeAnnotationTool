@@ -1,5 +1,7 @@
 #!/usr/bin/perl
-use lib File::Spec->catdir($FindBin::Bin)
+use FindBin;
+use File::Spec;
+use lib File::Spec->catdir($FindBin::Bin);
 require 'globalvariables.pl';
 
 sub WriteLogfile {
